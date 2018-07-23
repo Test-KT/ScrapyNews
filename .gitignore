@@ -1,0 +1,4 @@
+/.vscode
+.DS_Store
+/SougouNews/__pycache__
+/SougouNews/spiders/__pycache__
