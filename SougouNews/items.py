@@ -8,6 +8,8 @@
 import scrapy
 
 class SougounewsItem(scrapy.Item):
+    # 分类
+    tag=scrapy.Field()
     # 标题
     title=scrapy.Field()
     # 内容简略

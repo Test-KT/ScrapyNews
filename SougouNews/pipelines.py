@@ -13,6 +13,9 @@ class SougounewsPipeline(object):
 
 
 class SougounewsWriteJsonPipeline(object):
+    """
+    写数据到json文件
+    """
     def __init__(self):
         self.file = open(time.strftime('%m-%d-%H')+".json", 'w')
 
@@ -25,21 +28,23 @@ class SougounewsWriteJsonPipeline(object):
 
 
 class SougounewsMongoDbPipeline(object):
-
+    """
+    写入到mongodb中
+    """
     def __init__(self):
         self.client = pymongo.MongoClient("mongodb://root:root@127.0.0.1/")
         db = self.client['SougouNews']
         self.Table = db['HotNews']
-        idx = IndexModel([('link', ASCENDING)], unique=True)
+        idx = IndexModel([('title', ASCENDING)], unique=True)
         self.Table.create_indexes([idx])
 
     def process_item(self, item, spider):
         try:
             dic=dict(item)
-            link=item['link']
-            self.Table.update_one({'link': link}, {'$set': dic}, upsert=True)
+            title=item['title']
+            self.Table.update_one({'title': title}, {'$set': dic}, upsert=True)
         except Exception as e:
-            print("出现异常了")
+            pass
 
         return item
 
