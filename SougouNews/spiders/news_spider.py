@@ -24,20 +24,17 @@ class NewsSpiderSpider(scrapy.Spider):
                 tag_title=self.flipTag(i)
                 res=self.flipOver()
 
-                datas = []
-                news_box = res.css('ul.news-list')
-                for item in news_box.css('li'):
-                    date = item.css('div.txt-box div.s-p span::attr(t)').extract_first()
-                    if self.filter_time(date) >= 1:
-                        self.logger.info("time is filtered !")
-                        continue
+            news_box = res.xpath("//*[@id='pc_%d_0']"%(i))
+            for item in news_box.css('li'):
+                date = item.css('div.txt-box div.s-p span::attr(t)').extract_first()
+                if self.filter_time(date) >= 1:
+                    self.logger.info("time is filtered !")
+                    continue
 
-                    it=self.parse_data(item,tag_title)
-                    datas.append(it)
-                    yield it
+                it=self.parse_data(item,tag_title)
+                yield it
 
         self.closeDriver()
-        return datas
 
     def parse_data(self,item,tag_title):
         """
