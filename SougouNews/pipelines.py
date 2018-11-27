@@ -3,6 +3,7 @@
 import json
 import time
 import pymongo
+import os
 from pymongo import IndexModel, ASCENDING
 from SougouNews.items import SougounewsItem
 
@@ -17,7 +18,14 @@ class SougounewsWriteJsonPipeline(object):
     写数据到json文件
     """
     def __init__(self):
-        self.file = open(time.strftime('%m-%d-%H')+".json", 'w')
+        p='jsondata'
+        try:
+            self.file = open(os.path.join(p,time.strftime('%m-%d-%H')+".json"),'w')
+        except IOError as e:
+            os.makedirs(p)
+            self.file=open(os.path.join(p,time.strftime('%m-%d-%H')+".json"),'w')
+
+        
 
     def process_item(self, item, spider):
 

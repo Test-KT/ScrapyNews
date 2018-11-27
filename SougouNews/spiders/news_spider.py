@@ -6,12 +6,15 @@ from selenium import webdriver
 from scrapy.http import HtmlResponse
 import time
 from datetime import datetime
-
+import logging
 
 class NewsSpiderSpider(scrapy.Spider):
     name = 'news_spider'
     start_urls = ['http://weixin.sogou.com/']
     req_url = 'http://weixin.sogou.com'
+
+    logging.getLogger("requests").setLevel(logging.WARNING)
+    
 
     def parse(self, response):
         self.initDriver()
@@ -33,8 +36,18 @@ class NewsSpiderSpider(scrapy.Spider):
 
                 it=self.parse_data(item,tag_title)
                 yield it
+                # yield response.follow(it['link'],callback=self.parse_details(response,it))
 
         self.closeDriver()
+
+
+    # def parse_details(self,res,it):
+    #     """
+    #     抓取深度内容
+    #     """
+    #     it['']
+
+    #     return it
 
     def parse_data(self,item,tag_title):
         """

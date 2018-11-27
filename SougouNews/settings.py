@@ -57,8 +57,8 @@ DOWNLOADER_MIDDLEWARES = {
 # Configure item pipelines
 
 ITEM_PIPELINES = {
-#    'SougouNews.pipelines.SougounewsWriteJsonPipeline': 300,
-   'SougouNews.pipelines.SougounewsMongoDbPipeline':300
+   'SougouNews.pipelines.SougounewsWriteJsonPipeline': 300,
+   # 'SougouNews.pipelines.SougounewsMongoDbPipeline':300
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
